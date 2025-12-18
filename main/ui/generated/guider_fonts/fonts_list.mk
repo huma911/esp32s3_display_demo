@@ -1,0 +1,1 @@
+GEN_CSRCS += lv_font_ZiTiQuanWeiJunHeiW22_80.c lv_font_ZiTiQuanWeiJunHeiW22_20.c

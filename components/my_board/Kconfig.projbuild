@@ -1,0 +1,43 @@
+menu "My Customer Board"
+
+choice CUSTOMER_BOARD
+    prompt "My customer board"
+    default CUSTOMER_BOARD_V1_0
+    help
+        Select an customer board to use
+
+config CUSTOMER_BOARD_V1_0
+    bool "Customer board v1.0"
+
+endchoice
+
+choice CUSTOMER_BOARD_DISPLAY_DEV
+    prompt "My customer board display device"
+    default CUSTOMER_BOARD_DISPLAY_ST7796
+    help
+        Select an customer board display dev to use
+
+config CUSTOMER_BOARD_DISPLAY_ST7796
+    bool "Customer board display device st7796"
+
+config CUSTOMER_BOARD_DISPLAY_ST7789
+    bool "Customer board display device st7789"
+
+endchoice
+
+choice CUSTOMER_BOARD_DISPLAY_PORT
+    prompt "My customer board display port"
+    default CUSTOMER_BOARD_DISPLAY_SPI
+    help
+        Select an customer board display port to use
+
+config CUSTOMER_BOARD_DISPLAY_SPI
+    bool "Customer board display port spi"
+
+config CUSTOMER_BOARD_DISPLAY_I80
+    bool "Customer board display port i80"
+
+endchoice
+
+endmenu
+

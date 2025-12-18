@@ -10,6 +10,8 @@
 #include "esp_lvgl_port.h"
 #include "esp_lcd_st7796.h"
 
+// #include "rotary.h"
+
 #define TAG "lvgl_port"
 
 #define LCD_GPIO_BL     (GPIO_NUM_13)
@@ -29,6 +31,8 @@ static esp_lcd_panel_io_handle_t lcd_io_handle = NULL;
 static esp_lcd_panel_handle_t lcd_panel_handle = NULL;
 
 static lv_display_t *lvgl_disp = NULL;
+
+// static lv_indev_t *rotary_indev = NULL;
 
 static void lvgl_display_hardware_init(void)
 {
@@ -82,13 +86,18 @@ static void lvgl_display_hardware_init(void)
     ESP_ERROR_CHECK(gpio_set_level(LCD_GPIO_BL, LCD_BL_ON_LEVEL));
 }
 
+// static void lv_indev_rotary_read_cb(lv_indev_t * indev, lv_indev_data_t * data)
+// {
+//     // data->enc_diff = rotary_data.last_direction;
+// }
+
 static void lvgl_display_portation_init(void)
 {
     /* Initialize LVGL */
     const lvgl_port_cfg_t lvgl_cfg = {
         .task_priority = 4,         /* LVGL task priority */
         .task_stack = 8192,         /* LVGL task stack size */
-        .task_affinity = 1,        /* LVGL task pinned to core (-1 is no affinity) */
+        .task_affinity = 1,         /* LVGL task pinned to core (-1 is no affinity) */
         .task_max_sleep_ms = 500,   /* Maximum sleep in LVGL task */
         .timer_period_ms = 5        /* LVGL timer tick period in ms */
     };
@@ -122,6 +131,13 @@ static void lvgl_display_portation_init(void)
         }
     };
     lvgl_disp = lvgl_port_add_disp(&disp_cfg);
+
+    //add device 
+    // lvgl_port_lock(0);
+    // rotary_indev = lv_indev_create();
+    // lv_indev_set_type(rotary_indev, LV_INDEV_TYPE_ENCODER);
+    // lv_indev_set_read_cb(rotary_indev, lv_indev_rotary_read_cb);
+    // lvgl_port_unlock();
 }
 
 void lvgl_init(void)
