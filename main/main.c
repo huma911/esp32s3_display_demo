@@ -13,6 +13,8 @@
 #include "gui_guider.h"
 #include "custom.h"
 
+#include "board_def.h"
+
 #define TAG "main_app"
 
 lv_ui guider_ui;
@@ -26,7 +28,7 @@ void app_main(void)
 {
     lvgl_init();
 
-    rotary_init(GPIO_NUM_1, GPIO_NUM_2, rotary_trigger_cb);
+    rotary_init(ROTARY_ES_A_GPIO, ROTARY_ES_B_GPIO, rotary_trigger_cb);
     rotary_start_task();
 
     lvgl_port_lock(0);

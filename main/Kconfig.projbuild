@@ -1,0 +1,15 @@
+menu "My Board"
+
+choice MY_BOARD
+    prompt "My customer board"
+    default CUSTOMER_BOARD
+    help
+        Select a board to use
+
+config CUSTOMER_BOARD
+    bool "Customer board"
+
+endchoice
+
+endmenu
+
