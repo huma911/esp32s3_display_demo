@@ -1,6 +1,10 @@
 #ifndef _ROTARY_ENCODER_SWITCH_H_
 #define _ROTARY_ENCODER_SWITCH_H_
 
+#include "driver/gpio.h"
+
+#include "button.h"
+
 typedef enum {
     ROTARY_DIRECTION_CCW     = -1,
     ROTARY_DIRECTION_INVALID = 0,
@@ -44,6 +48,13 @@ typedef struct {
 typedef void (*rotary_trigger_cb_t)(int8_t rotary_value);
 
 typedef struct {
+    rotary_gpio_num_t rotary_gpio_cfg;
+    rotary_trigger_cb_t rotary_cb;
+
+    button_config_t button_cfg;
+} rotary_cfg_t;
+
+typedef struct {
     void* rotary_event_queue;
     
     rotary_gpio_num_t gpio_num;
@@ -53,9 +64,11 @@ typedef struct {
     rotary_direction_t  last_direction;
 
     rotary_trigger_cb_t rotary_cb;
+
+    button_config_t button_config;
 } rotary_data_t;
 
-void rotary_init(gpio_num_t gpio_a, gpio_num_t gpio_b, rotary_trigger_cb_t rotary_cb);
+void rotary_init(rotary_cfg_t* rotary_cfg);
 void rotary_start_task(void);
 
 // extern rotary_data_t rotary_data;

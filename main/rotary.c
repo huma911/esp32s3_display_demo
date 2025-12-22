@@ -45,19 +45,24 @@ static void rotary_gpio_trigger_isr_handler(void *arg)
     portYIELD_FROM_ISR(high_task_awoken);
 }
 
-void rotary_init(gpio_num_t trigger_gpio, gpio_num_t another_gpio, rotary_trigger_cb_t rotary_cb)
+static void button_init(button_config_t* button_cfg)
 {
-      //0. event & data initial
-    rotary_data.gpio_trigger_event.type   = ROTARY_A_TRIGGER;
-    rotary_data.gpio_num.trigger_gpio_num = trigger_gpio;
-    rotary_data.gpio_num.another_gpio_num = another_gpio;
-    rotary_data.rotary_cb                 = rotary_cb;
+    button_event_set(button_cfg);
+}
 
-      //1. gpio initial
+void rotary_init(rotary_cfg_t* rotary_cfg)
+{
+    //0. event & data initial
+    rotary_data.gpio_trigger_event.type   = ROTARY_A_TRIGGER;
+    rotary_data.gpio_num.trigger_gpio_num = rotary_cfg->rotary_gpio_cfg.trigger_gpio_num;
+    rotary_data.gpio_num.another_gpio_num = rotary_cfg->rotary_gpio_cfg.another_gpio_num;
+    rotary_data.rotary_cb                 = rotary_cfg->rotary_cb;
+
+    //1. gpio initial
     gpio_config_t rotary_gpio_a_cfg = {
         .intr_type    = GPIO_INTR_ANYEDGE,
         .mode         = GPIO_MODE_INPUT,
-        .pin_bit_mask = 1ull << trigger_gpio,
+        .pin_bit_mask = 1ull << rotary_cfg->rotary_gpio_cfg.trigger_gpio_num,
         .pull_down_en = GPIO_PULLDOWN_ENABLE,
         .pull_up_en   = GPIO_PULLUP_ENABLE,
     };
@@ -65,24 +70,27 @@ void rotary_init(gpio_num_t trigger_gpio, gpio_num_t another_gpio, rotary_trigge
     gpio_config_t rotary_gpio_b_cfg = {
         .intr_type    = GPIO_INTR_DISABLE,
         .mode         = GPIO_MODE_INPUT,
-        .pin_bit_mask = 1ull << another_gpio,
+        .pin_bit_mask = 1ull << rotary_cfg->rotary_gpio_cfg.another_gpio_num,
         .pull_down_en = GPIO_PULLDOWN_ENABLE,
         .pull_up_en   = GPIO_PULLUP_ENABLE,
     };
     gpio_config(&rotary_gpio_a_cfg);
     gpio_config(&rotary_gpio_b_cfg);
 
-      //2. register the isr
+    //2. register the isr
     gpio_install_isr_service(ESP_INTR_FLAG_EDGE);
 
-      //3. bind gpio and isr
-    gpio_isr_handler_add(trigger_gpio, rotary_gpio_trigger_isr_handler, (void*)(&(rotary_data.gpio_num)));
+    //3. bind gpio and isr
+    gpio_isr_handler_add(rotary_cfg->rotary_gpio_cfg.trigger_gpio_num, rotary_gpio_trigger_isr_handler, (void*)(&(rotary_data.gpio_num)));
 
-      //4. enable interrupt
-    gpio_intr_enable(trigger_gpio);
+    //4. enable interrupt
+    gpio_intr_enable(rotary_cfg->rotary_gpio_cfg.trigger_gpio_num);
 
-    rotary_data.gpio_state.last_trigger_gpio = gpio_get_level(trigger_gpio);
-    rotary_data.gpio_state.last_another_gpio = gpio_get_level(another_gpio);
+    rotary_data.gpio_state.last_trigger_gpio = gpio_get_level(rotary_cfg->rotary_gpio_cfg.trigger_gpio_num);
+    rotary_data.gpio_state.last_another_gpio = gpio_get_level(rotary_cfg->rotary_gpio_cfg.another_gpio_num);
+
+    //5. button init
+    button_init(&(rotary_cfg->button_cfg));
 }
 
 static void rotary_event_task(void *pvParameters)

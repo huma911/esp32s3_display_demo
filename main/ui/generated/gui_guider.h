@@ -22,7 +22,7 @@ typedef struct
 	lv_obj_t *screen_main;
 	bool screen_main_del;
 	lv_obj_t *screen_main_digital_clock_main;
-	lv_obj_t *screen_main_label_data;
+	lv_obj_t *screen_main_label_date;
 	lv_obj_t *screen_main_label_week;
 	lv_obj_t *screen_main_label_location;
 	lv_obj_t *screen_main_label_today;
@@ -31,8 +31,8 @@ typedef struct
 	lv_obj_t *screen_main_label_temp_today;
 	lv_obj_t *screen_main_label_temp_tomorrow;
 	lv_obj_t *screen_main_label_temp_after_tomorrow;
-	lv_obj_t *screen_main_img_1;
-	lv_obj_t *screen_main_img_2;
+	lv_obj_t *screen_main_img_wifi;
+	lv_obj_t *screen_main_img_line;
 	lv_obj_t *screen_main_img_weather_taday;
 	lv_obj_t *screen_main_img_weather_tomorrow;
 	lv_obj_t *screen_main_img_weather_after_tomorrow;

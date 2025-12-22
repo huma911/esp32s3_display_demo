@@ -37,7 +37,7 @@
  */
 #define ROTARY_ES_A_GPIO            (GPIO_NUM_1)
 #define ROTARY_ES_B_GPIO            (GPIO_NUM_2)
-#define ROTARY_BUTTON_GPIO          (GPIO_NUM_NC)
+#define ROTARY_BUTTON_GPIO          (GPIO_NUM_45)
 
 
 /**
