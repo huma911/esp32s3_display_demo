@@ -1,13 +1,4 @@
-if(CONFIG_CUSTOMER_BOARD)
-    if(CONFIG_CUSTOMER_BOARD_DISPLAY_ST7796)
-        set(INCLUDE_DIRS "." "ui/custom" "ui/generated" "ui/generated/guider_customer_fonts")
-    elseif(CONFIG_CUSTOMER_BOARD_DISPLAY_ST7789)
-        set(INCLUDE_DIRS ".")
-    else()
-        set(INCLUDE_DIRS ".")
-    endif()
-endif()
-
+set(INCLUDE_DIRS "." "ui/custom" "ui/generated" "ui/generated/guider_customer_fonts")
 set(SOURCES "")
 file(GLOB_RECURSE SOURCES ./*.c)
 

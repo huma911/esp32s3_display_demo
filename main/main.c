@@ -76,12 +76,32 @@ static void wifi_state_callback(WIFI_STATE state)
             lv_obj_clear_flag(guider_ui.screen_main_img_wifi, LV_OBJ_FLAG_HIDDEN);  //show the wifi state image
         }
         my_sntp_init();
+    } else if(state == WIFI_STATE_DISCONNECTED) {
+        ESP_LOGI(TAG, "wifi disconnected!");
+    } else {
+        ;
     }
 }
 
 static void rotary_rotate_trigger_cb(int8_t rotary_value)
 {
+    static uint8_t screen_index = 0;
     ESP_LOGI(TAG, "rotary_value: %d", rotary_value);
+
+    if(rotary_value == 1 && screen_index == 0) {
+        lvgl_port_lock(0);
+        lv_obj_send_event(guider_ui.screen_main, LV_EVENT_CLICKED, NULL);
+        lvgl_port_unlock();
+        screen_index = 1;
+    } else if(rotary_value == -1 && screen_index == 1) {
+        lvgl_port_lock(0);
+        lv_obj_send_event(guider_ui.screen_aclock, LV_EVENT_SHORT_CLICKED, NULL);
+        lvgl_port_unlock();
+        screen_index = 0;
+    } else {
+        ;
+    }
+    
 }
 
 static void rotary_button_short_press_trigger_cb(int gpio)

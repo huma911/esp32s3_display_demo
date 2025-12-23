@@ -134,19 +134,28 @@ void set_home_time(lv_ui* ui, date_value_t* date_value)
     lvgl_port_unlock();
 }
 
+static void aclock_update(lv_ui* ui, int *hour, int *min, int *sec)
+{
+    int32_t sec_angle  = (*sec) * 60;
+    int32_t min_angle  = ((*sec) % 60) * 1 + (*min) * 60;
+    int32_t hour_angle = ((*min) % 60) * 5 + (*hour) * 300;
+
+    lv_image_set_rotation(ui->screen_aclock_img_second, sec_angle);
+    lv_image_set_rotation(ui->screen_aclock_img_minute, min_angle);
+    lv_image_set_rotation(ui->screen_aclock_img_hour, hour_angle);
+}
+
 static void clock_count(int *hour, int *min, int *sec)
 {
     (*sec)++;
-    if(*sec == 60)
-    {
+    if(*sec == 60) {
         *sec = 0;
         (*min)++;
     }
-    if(*min == 60)
-    {
+
+    if(*min == 60) {
         *min = 0;
-        if(*hour < 24)
-        {
+        if(*hour < 23) {
             (*hour)++;
         } else {
             (*hour)++;
@@ -158,6 +167,7 @@ static void clock_count(int *hour, int *min, int *sec)
 static void screen_main_digital_clock_main_replace_timer(lv_timer_t *timer)
 {
     clock_count(&screen_main_digital_clock_main_hour_value, &screen_main_digital_clock_main_min_value, &screen_main_digital_clock_main_sec_value);
+    aclock_update(custom_ui, &screen_main_digital_clock_main_hour_value, &screen_main_digital_clock_main_min_value, &screen_main_digital_clock_main_sec_value);
 
     if(screen_main_digital_clock_main_hour_value == 0 && screen_main_digital_clock_main_min_value == 0 && screen_main_digital_clock_main_sec_value == 0)
     {
@@ -175,6 +185,7 @@ void custom_init(lv_ui *ui)
 {
     /* Add your codes here */
     custom_ui = ui;
+    setup_scr_screen_aclock(ui);
 
     lvgl_port_lock(0);
     lv_obj_add_flag(ui->screen_main_img_wifi, LV_OBJ_FLAG_HIDDEN);  //hide the wifi state image

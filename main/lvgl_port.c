@@ -38,7 +38,17 @@
 #define I80_CLK_FREQUENCY       (20 * 1000 * 1000)
 
 #elif defined(CONFIG_CUSTOMER_BOARD_DISPLAY_ST7789) && defined(CONFIG_CUSTOMER_BOARD_DISPLAY_SPI)
+
+// Using SPI2 in the demo
+#define LCD_HOST  SPI2_HOST
+#define LCD_DRAW_BUFF_HEIGHT    (120)
+#define SPI_CLK_FREQUENCY       (80 * 1000 * 1000)
+
 #elif defined(CONFIG_CUSTOMER_BOARD_DISPLAY_ST7789) && defined(CONFIG_CUSTOMER_BOARD_DISPLAY_I80)
+
+#define LCD_DRAW_BUFF_HEIGHT    (240)
+#define I80_CLK_FREQUENCY       (10 * 1000 * 1000)
+
 #else
 #endif
 
@@ -58,7 +68,7 @@ static void lvgl_display_hardware_init(void)
     };
     ESP_ERROR_CHECK(gpio_config(&bk_gpio_config));
 
-#if defined(CONFIG_CUSTOMER_BOARD_DISPLAY_ST7796) && defined(CONFIG_CUSTOMER_BOARD_DISPLAY_SPI)
+#if defined(CONFIG_CUSTOMER_BOARD_DISPLAY_SPI)
     ESP_LOGI(TAG, "Initialize SPI bus");
     spi_bus_config_t buscfg = {
         .sclk_io_num     = LCD_GPIO_CLK,
@@ -82,12 +92,12 @@ static void lvgl_display_hardware_init(void)
     };
     // Attach the LCD to the SPI bus
     ESP_ERROR_CHECK(esp_lcd_new_panel_io_spi((esp_lcd_spi_bus_handle_t)LCD_HOST, &io_config, &lcd_io_handle));
-#elif defined(CONFIG_CUSTOMER_BOARD_DISPLAY_ST7796) && defined(CONFIG_CUSTOMER_BOARD_DISPLAY_I80)
+#elif defined(CONFIG_CUSTOMER_BOARD_DISPLAY_I80)
     ESP_LOGI(TAG, "Initialize Intel 8080 bus");
     esp_lcd_i80_bus_handle_t i80_bus    = NULL;
     esp_lcd_i80_bus_config_t bus_config = {
         .clk_src        = LCD_CLK_SRC_DEFAULT,
-        .dc_gpio_num    = LCD_GPIO_DC,
+        .dc_gpio_num    = LCD_GPIO_DCX,
         .wr_gpio_num    = LCD_GPIO_WR,
         .data_gpio_nums = {
             LCD_GPIO_D0,
@@ -124,11 +134,10 @@ static void lvgl_display_hardware_init(void)
     };
     // Attach the LCD to the I80 bus
     ESP_ERROR_CHECK(esp_lcd_new_panel_io_i80(i80_bus, &io_config, &lcd_io_handle));
-#elif defined(CONFIG_CUSTOMER_BOARD_DISPLAY_ST7789) && defined(CONFIG_CUSTOMER_BOARD_DISPLAY_SPI)
-#elif defined(CONFIG_CUSTOMER_BOARD_DISPLAY_ST7789) && defined(CONFIG_CUSTOMER_BOARD_DISPLAY_I80)
 #else
 #endif
 
+#if defined(CONFIG_CUSTOMER_BOARD_DISPLAY_ST7796)
     ESP_LOGI(TAG, "Install ST7796 panel driver");
     esp_lcd_panel_dev_config_t panel_config = {
         .reset_gpio_num = LCD_GPIO_RST,
@@ -136,6 +145,16 @@ static void lvgl_display_hardware_init(void)
         .bits_per_pixel = 16,
     };
     ESP_ERROR_CHECK(esp_lcd_new_panel_st7796(lcd_io_handle, &panel_config, &lcd_panel_handle));
+#elif defined(CONFIG_CUSTOMER_BOARD_DISPLAY_ST7789)
+    ESP_LOGI(TAG, "Install ST7789 panel driver");
+    esp_lcd_panel_dev_config_t panel_config = {
+        .reset_gpio_num = LCD_GPIO_RST,
+        .rgb_ele_order  = LCD_RGB_ELEMENT_ORDER_RGB,
+        .bits_per_pixel = 16,
+    };
+    ESP_ERROR_CHECK(esp_lcd_new_panel_st7789(lcd_io_handle, &panel_config, &lcd_panel_handle));
+#else
+#endif
 
     esp_lcd_panel_reset(lcd_panel_handle);
     esp_lcd_panel_init(lcd_panel_handle);
@@ -183,9 +202,9 @@ static void lvgl_display_portation_init(void)
         .monochrome    = false,
         .color_format  = LV_COLOR_FORMAT_RGB565,
         .rotation      = {
-            .swap_xy  = true,
-            .mirror_x = false,
-            .mirror_y = false,
+            .swap_xy  = LCD_SWAP_XY,
+            .mirror_x = LCD_MIRROR_X,
+            .mirror_y = LCD_MIRROR_Y,
         },
         .flags = {
             .buff_dma    = true,
