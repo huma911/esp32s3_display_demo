@@ -41,6 +41,11 @@ typedef struct
 	lv_obj_t *screen_aclock_img_second;
 	lv_obj_t *screen_aclock_img_hour;
 	lv_obj_t *screen_aclock_img_minute;
+	lv_obj_t *screen_aclock_label_location;
+	lv_obj_t *screen_aclock_label_date;
+	lv_obj_t *screen_aclock_label_week;
+	lv_obj_t *screen_aclock_img_weather;
+	lv_obj_t *screen_aclock_label_temp_today;
 }lv_ui;
 
 typedef void (*ui_setup_scr_t)(lv_ui * ui);
@@ -72,14 +77,13 @@ void setup_scr_screen_main(lv_ui *ui);
 void setup_scr_screen_aclock(lv_ui *ui);
 LV_IMAGE_DECLARE(_wifi_RGB565A8_32x32);
 LV_IMAGE_DECLARE(_line_RGB565A8_429x21);
-LV_IMAGE_DECLARE(_sun_RGB565A8_64x58);
-LV_IMAGE_DECLARE(_cloudy_RGB565A8_64x58);
-LV_IMAGE_DECLARE(_rain_RGB565A8_64x58);
+LV_IMAGE_DECLARE(_99_RGB565A8_64x64);
 
 LV_IMAGE_DECLARE(_clock_bg_img_RGB565A8_480x320);
 LV_IMAGE_DECLARE(_img_clockwise_sec_RGB565A8_20x135);
 LV_IMAGE_DECLARE(_img_clockwise_hour_RGB565A8_15x100);
 LV_IMAGE_DECLARE(_img_clockwise_min_RGB565A8_15x120);
+LV_IMAGE_DECLARE(_99_RGB565A8_48x48);
 
 LV_FONT_DECLARE(lv_font_ZiTiQuanWeiJunHeiW22_80)
 LV_FONT_DECLARE(lv_font_ZiTiQuanWeiJunHeiW22_20)

@@ -8,3 +8,4 @@ idf_component_register(
                         )
 
 spiffs_create_partition_image(html ../html FLASH_IN_PROJECT)
+spiffs_create_partition_image(weather_icon ../weather_icon FLASH_IN_PROJECT)

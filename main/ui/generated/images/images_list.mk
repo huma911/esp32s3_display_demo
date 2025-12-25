@@ -1,1 +1,1 @@
-GEN_CSRCS += _wifi_RGB565A8_32x32.c _line_RGB565A8_429x21.c _sun_RGB565A8_64x58.c _cloudy_RGB565A8_64x58.c _rain_RGB565A8_64x58.c _clock_bg_img_RGB565A8_480x320.c _img_clockwise_sec_RGB565A8_20x135.c _img_clockwise_hour_RGB565A8_15x100.c _img_clockwise_min_RGB565A8_15x120.c
+GEN_CSRCS += _wifi_RGB565A8_32x32.c _line_RGB565A8_429x21.c _99_RGB565A8_64x64.c _clock_bg_img_RGB565A8_480x320.c _img_clockwise_sec_RGB565A8_20x135.c _img_clockwise_hour_RGB565A8_15x100.c _img_clockwise_min_RGB565A8_15x120.c _99_RGB565A8_48x48.c

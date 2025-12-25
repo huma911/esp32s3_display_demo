@@ -198,7 +198,7 @@ void setup_scr_screen_main(lv_ui *ui)
     ui->screen_main_label_temp_today = lv_label_create(ui->screen_main);
     lv_obj_set_pos(ui->screen_main_label_temp_today, 33, 283);
     lv_obj_set_size(ui->screen_main_label_temp_today, 112, 24);
-    lv_label_set_text(ui->screen_main_label_temp_today, "10-15℃");
+    lv_label_set_text(ui->screen_main_label_temp_today, "0-100℃");
     lv_label_set_long_mode(ui->screen_main_label_temp_today, LV_LABEL_LONG_WRAP);
 
     //Write style for screen_main_label_temp_today, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
@@ -221,7 +221,7 @@ void setup_scr_screen_main(lv_ui *ui)
     ui->screen_main_label_temp_tomorrow = lv_label_create(ui->screen_main);
     lv_obj_set_pos(ui->screen_main_label_temp_tomorrow, 180, 283);
     lv_obj_set_size(ui->screen_main_label_temp_tomorrow, 112, 24);
-    lv_label_set_text(ui->screen_main_label_temp_tomorrow, "8-14℃");
+    lv_label_set_text(ui->screen_main_label_temp_tomorrow, "0-100℃");
     lv_label_set_long_mode(ui->screen_main_label_temp_tomorrow, LV_LABEL_LONG_WRAP);
 
     //Write style for screen_main_label_temp_tomorrow, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
@@ -244,7 +244,7 @@ void setup_scr_screen_main(lv_ui *ui)
     ui->screen_main_label_temp_after_tomorrow = lv_label_create(ui->screen_main);
     lv_obj_set_pos(ui->screen_main_label_temp_after_tomorrow, 333, 283);
     lv_obj_set_size(ui->screen_main_label_temp_after_tomorrow, 112, 24);
-    lv_label_set_text(ui->screen_main_label_temp_after_tomorrow, "5-10℃");
+    lv_label_set_text(ui->screen_main_label_temp_after_tomorrow, "0-100℃");
     lv_label_set_long_mode(ui->screen_main_label_temp_after_tomorrow, LV_LABEL_LONG_WRAP);
 
     //Write style for screen_main_label_temp_after_tomorrow, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
@@ -292,9 +292,9 @@ void setup_scr_screen_main(lv_ui *ui)
     //Write codes screen_main_img_weather_taday
     ui->screen_main_img_weather_taday = lv_image_create(ui->screen_main);
     lv_obj_set_pos(ui->screen_main_img_weather_taday, 60, 210);
-    lv_obj_set_size(ui->screen_main_img_weather_taday, 64, 58);
+    lv_obj_set_size(ui->screen_main_img_weather_taday, 64, 64);
     lv_obj_add_flag(ui->screen_main_img_weather_taday, LV_OBJ_FLAG_CLICKABLE);
-    lv_image_set_src(ui->screen_main_img_weather_taday, &_sun_RGB565A8_64x58);
+    lv_image_set_src(ui->screen_main_img_weather_taday, &_99_RGB565A8_64x64);
     lv_image_set_pivot(ui->screen_main_img_weather_taday, 50,50);
     lv_image_set_rotation(ui->screen_main_img_weather_taday, 0);
 
@@ -305,9 +305,9 @@ void setup_scr_screen_main(lv_ui *ui)
     //Write codes screen_main_img_weather_tomorrow
     ui->screen_main_img_weather_tomorrow = lv_image_create(ui->screen_main);
     lv_obj_set_pos(ui->screen_main_img_weather_tomorrow, 202, 210);
-    lv_obj_set_size(ui->screen_main_img_weather_tomorrow, 64, 58);
+    lv_obj_set_size(ui->screen_main_img_weather_tomorrow, 64, 64);
     lv_obj_add_flag(ui->screen_main_img_weather_tomorrow, LV_OBJ_FLAG_CLICKABLE);
-    lv_image_set_src(ui->screen_main_img_weather_tomorrow, &_cloudy_RGB565A8_64x58);
+    lv_image_set_src(ui->screen_main_img_weather_tomorrow, &_99_RGB565A8_64x64);
     lv_image_set_pivot(ui->screen_main_img_weather_tomorrow, 50,50);
     lv_image_set_rotation(ui->screen_main_img_weather_tomorrow, 0);
 
@@ -318,9 +318,9 @@ void setup_scr_screen_main(lv_ui *ui)
     //Write codes screen_main_img_weather_after_tomorrow
     ui->screen_main_img_weather_after_tomorrow = lv_image_create(ui->screen_main);
     lv_obj_set_pos(ui->screen_main_img_weather_after_tomorrow, 356, 210);
-    lv_obj_set_size(ui->screen_main_img_weather_after_tomorrow, 64, 58);
+    lv_obj_set_size(ui->screen_main_img_weather_after_tomorrow, 64, 64);
     lv_obj_add_flag(ui->screen_main_img_weather_after_tomorrow, LV_OBJ_FLAG_CLICKABLE);
-    lv_image_set_src(ui->screen_main_img_weather_after_tomorrow, &_rain_RGB565A8_64x58);
+    lv_image_set_src(ui->screen_main_img_weather_after_tomorrow, &_99_RGB565A8_64x64);
     lv_image_set_pivot(ui->screen_main_img_weather_after_tomorrow, 50,50);
     lv_image_set_rotation(ui->screen_main_img_weather_after_tomorrow, 0);
 

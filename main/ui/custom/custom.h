@@ -26,6 +26,13 @@ typedef struct {
 
     uint8_t week;
 } date_value_t;
+
+typedef enum {
+    DAY_TODAY = 0,
+    DAY_TOMORROW,
+    DAY_AFTER_TOMORROW,
+    DAY_DAY_NUM,
+} Day_Type;
 typedef enum {
     WEEK_SUNDAY = 0,
     WEEK_MONDAY,
@@ -46,7 +53,12 @@ void custom_init(lv_ui *ui);
 
 void set_home_time(lv_ui* ui, date_value_t* date_value);
 
+void set_location_parameter(lv_ui* ui, const char* location_name);
+void set_weather_parameter(lv_ui* ui, Day_Type index, const char* image_path, int low_temperature, int high_temperature);
+
 extern lv_timer_t* digital_clock_timer;
+
+extern lv_ui* custom_ui;
 
 #ifdef __cplusplus
 }

@@ -13,6 +13,7 @@
 #include "lvgl_port.h"
 #include "rotary.h"
 #include "button.h"
+#include "weather.h"
 
 #include "gui_guider.h"
 #include "custom.h"
@@ -147,4 +148,6 @@ void app_main(void)
 
     setenv("TZ", "CST-8", 1);   //set timezone environment variable
     tzset();                    //enable timezone environment variable
+
+    weather_start();
 }
