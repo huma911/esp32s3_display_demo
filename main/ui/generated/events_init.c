@@ -39,9 +39,9 @@ static void screen_aclock_event_handler (lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     switch (code) {
-    case LV_EVENT_SHORT_CLICKED:
+    case LV_EVENT_CLICKED:
     {
-        ui_load_scr_animation(&guider_ui, &guider_ui.screen_main, guider_ui.screen_main_del, &guider_ui.screen_aclock_del, setup_scr_screen_main, LV_SCR_LOAD_ANIM_NONE, 0, 0, false, false);
+        ui_load_scr_animation(&guider_ui, &guider_ui.screen_list, guider_ui.screen_list_del, &guider_ui.screen_aclock_del, setup_scr_screen_list, LV_SCR_LOAD_ANIM_NONE, 0, 0, false, false);
         break;
     }
     default:
@@ -52,6 +52,25 @@ static void screen_aclock_event_handler (lv_event_t *e)
 void events_init_screen_aclock (lv_ui *ui)
 {
     lv_obj_add_event_cb(ui->screen_aclock, screen_aclock_event_handler, LV_EVENT_ALL, ui);
+}
+
+static void screen_list_event_handler (lv_event_t *e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    switch (code) {
+    case LV_EVENT_CLICKED:
+    {
+        ui_load_scr_animation(&guider_ui, &guider_ui.screen_main, guider_ui.screen_main_del, &guider_ui.screen_list_del, setup_scr_screen_main, LV_SCR_LOAD_ANIM_NONE, 0, 0, false, true);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void events_init_screen_list (lv_ui *ui)
+{
+    lv_obj_add_event_cb(ui->screen_list, screen_list_event_handler, LV_EVENT_ALL, ui);
 }
 
 

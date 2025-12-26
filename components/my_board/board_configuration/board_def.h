@@ -33,6 +33,11 @@
 #define RED_LED_GPIO                (-1)
 
 /**
+ * @brief Button Definition
+ */
+#define SW2_BUTTON_GPIO             (GPIO_NUM_46)
+
+/**
  * @brief Rotary Encoder Switch Function Definition
  */
 #define ROTARY_ES_A_GPIO            (GPIO_NUM_1)

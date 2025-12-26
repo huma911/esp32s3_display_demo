@@ -74,6 +74,7 @@ void init_scr_del_flag(lv_ui *ui)
 
     ui->screen_main_del = true;
     ui->screen_aclock_del = true;
+    ui->screen_list_del = true;
 }
 
 void setup_bottom_layer(void)

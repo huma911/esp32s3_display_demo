@@ -46,6 +46,8 @@ typedef struct
 	lv_obj_t *screen_aclock_label_week;
 	lv_obj_t *screen_aclock_img_weather;
 	lv_obj_t *screen_aclock_label_temp_today;
+	lv_obj_t *screen_list;
+	bool screen_list_del;
 }lv_ui;
 
 typedef void (*ui_setup_scr_t)(lv_ui * ui);
@@ -75,6 +77,7 @@ extern lv_ui guider_ui;
 
 void setup_scr_screen_main(lv_ui *ui);
 void setup_scr_screen_aclock(lv_ui *ui);
+void setup_scr_screen_list(lv_ui *ui);
 LV_IMAGE_DECLARE(_wifi_RGB565A8_32x32);
 LV_IMAGE_DECLARE(_line_RGB565A8_429x21);
 LV_IMAGE_DECLARE(_99_RGB565A8_64x64);

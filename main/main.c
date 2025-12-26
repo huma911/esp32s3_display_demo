@@ -25,6 +25,8 @@
 
 lv_ui guider_ui;
 
+static uint8_t screen_index = 0;
+
 static void my_sntp_sync_time_cb(struct timeval *tv)
 {
     struct tm t;
@@ -84,35 +86,73 @@ static void wifi_state_callback(WIFI_STATE state)
     }
 }
 
+#define SCROLL_PIXELS	(100)
+extern lv_obj_t * cont;
+
 static void rotary_rotate_trigger_cb(int8_t rotary_value)
 {
-    static uint8_t screen_index = 0;
+    
     ESP_LOGI(TAG, "rotary_value: %d", rotary_value);
 
-    if(rotary_value == 1 && screen_index == 0) {
-        lvgl_port_lock(0);
-        lv_obj_send_event(guider_ui.screen_main, LV_EVENT_CLICKED, NULL);
-        lvgl_port_unlock();
-        screen_index = 1;
-    } else if(rotary_value == -1 && screen_index == 1) {
-        lvgl_port_lock(0);
-        lv_obj_send_event(guider_ui.screen_aclock, LV_EVENT_SHORT_CLICKED, NULL);
-        lvgl_port_unlock();
-        screen_index = 0;
-    } else {
-        ;
+    if(screen_index == 2) {
+        if(rotary_value == 1) {
+            lvgl_port_lock(0);
+            lv_obj_scroll_by(cont, 0, SCROLL_PIXELS, LV_ANIM_ON);
+            lvgl_port_unlock();
+        } else if(rotary_value == -1) {
+            lvgl_port_lock(0);
+            lv_obj_scroll_by(cont, 0, -SCROLL_PIXELS, LV_ANIM_ON);
+            lvgl_port_unlock();
+        } else {
+            ;
+        }
     }
-    
+}
+
+void lv_example_scroll_6(void);
+
+static void sw2_button_short_press_trigger_cb(int gpio)
+{
+    ESP_LOGI(TAG, "sw2 button short press: %d.", gpio);
+
+    switch(screen_index) {
+        case 0:
+            lvgl_port_lock(0);
+            lv_obj_send_event(guider_ui.screen_main, LV_EVENT_CLICKED, NULL);
+            lvgl_port_unlock();
+            break;
+        case 1:
+            lvgl_port_lock(0);
+            lv_obj_send_event(guider_ui.screen_aclock, LV_EVENT_CLICKED, NULL);
+            lv_example_scroll_6();
+            lvgl_port_unlock();
+            break;
+        case 2:
+            lvgl_port_lock(0);
+            lv_obj_send_event(guider_ui.screen_list, LV_EVENT_CLICKED, NULL);
+            lvgl_port_unlock();
+            break;
+        default:
+            break;
+    }
+
+    screen_index ++;
+    screen_index = screen_index%3;
+}
+
+static void sw2_button_long_press_trigger_cb(int gpio)
+{
+    ESP_LOGI(TAG, "sw2 button long press: %d.", gpio);
 }
 
 static void rotary_button_short_press_trigger_cb(int gpio)
 {
-    ESP_LOGI(TAG, "button short press: %d.", gpio);
+    ESP_LOGI(TAG, "rotary button short press: %d.", gpio);
 }
 
 static void rotary_button_long_press_trigger_cb(int gpio)
 {
-    ESP_LOGI(TAG, "button long press: %d.", gpio);
+    ESP_LOGI(TAG, "rotary button long press: %d.", gpio);
     ap_wifi_apcfg(true);
 }
 
@@ -135,6 +175,16 @@ void app_main(void)
     };
     rotary_init(&rotary_cfg);
     rotary_start_task();
+
+    button_config_t button_cfg = {
+        .active_level    = 0,
+        .getlevel_cb     = gpio_get_level,
+        .gpio_num        = SW2_BUTTON_GPIO,
+        .long_cb         = sw2_button_long_press_trigger_cb,
+        .long_press_time = 3000,
+        .short_cb        = sw2_button_short_press_trigger_cb,
+    };
+    button_event_set(&button_cfg);
 
     lvgl_init();
 
