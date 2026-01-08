@@ -19,13 +19,13 @@ typedef struct
     button_getleve_cb_t getlevel_cb;    // get level callback
     button_press_cb_t short_cb;         // short press callback
     button_press_cb_t long_cb;          // long press call back
-}button_config_t;
+}my_button_config_t;
 
 /** Config the button event
  * @param cfg   button configuration struct
  * @return ESP_OK or ESP_FAIL 
 */
-esp_err_t button_event_set(button_config_t *cfg);
+esp_err_t button_event_set(my_button_config_t *cfg);
 
 
 #endif

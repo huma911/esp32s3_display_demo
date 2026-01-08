@@ -45,7 +45,7 @@ static void rotary_gpio_trigger_isr_handler(void *arg)
     portYIELD_FROM_ISR(high_task_awoken);
 }
 
-static void button_init(button_config_t* button_cfg)
+static void button_init(my_button_config_t* button_cfg)
 {
     button_event_set(button_cfg);
 }

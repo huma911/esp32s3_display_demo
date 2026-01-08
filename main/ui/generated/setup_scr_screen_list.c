@@ -62,6 +62,7 @@ static void scroll_event_cb(lv_event_t * e)
  * Translate the object as they scroll
  */
 lv_obj_t * cont;
+lv_obj_t * list_btn[20];
 void lv_example_scroll_6(void)
 {
     cont = lv_obj_create(lv_screen_active());
@@ -77,10 +78,10 @@ void lv_example_scroll_6(void)
 
     uint32_t i;
     for(i = 0; i < 20; i++) {
-        lv_obj_t * btn = lv_button_create(cont);
-        lv_obj_set_width(btn, lv_pct(50));
+        list_btn[i] = lv_button_create(cont);
+        lv_obj_set_width(list_btn[i], lv_pct(50));
 
-        lv_obj_t * label = lv_label_create(btn);
+        lv_obj_t * label = lv_label_create(list_btn[i]);
         lv_label_set_text_fmt(label, "Button %" LV_PRIu32, i);
     }
 

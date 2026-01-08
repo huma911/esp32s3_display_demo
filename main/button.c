@@ -16,7 +16,7 @@ typedef enum
 
 typedef struct Button
 {
-    button_config_t btn_cfg;    //button configuration
+    my_button_config_t btn_cfg;    //button configuration
     BUTTON_STATE    state;      //current status
     int press_cnt;              //press count
     struct Button* next;        //next button parameters
@@ -44,7 +44,7 @@ static void button_handle(void *param);
  * @param cfg   button configuration struct
  * @return ESP_OK or ESP_FAIL 
 */
-esp_err_t button_event_set(button_config_t *cfg)
+esp_err_t button_event_set(my_button_config_t *cfg)
 {
     button_dev_t* btn = (button_dev_t*)malloc(sizeof(button_dev_t));
     if(!btn)
@@ -61,7 +61,7 @@ esp_err_t button_event_set(button_config_t *cfg)
             btn_p = btn_p->next;
         btn_p->next = btn;
     }
-    memcpy(&btn->btn_cfg,cfg,sizeof(button_config_t));
+    memcpy(&btn->btn_cfg,cfg,sizeof(my_button_config_t));
 
     if (g_is_timer_running == false) {
         static int timer_interval = TIMER_BUTTON_PERIOD_MS;

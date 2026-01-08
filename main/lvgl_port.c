@@ -55,7 +55,7 @@
 static esp_lcd_panel_io_handle_t lcd_io_handle = NULL;
 static esp_lcd_panel_handle_t lcd_panel_handle = NULL;
 
-static lv_display_t *lvgl_disp = NULL;
+lv_display_t *lvgl_disp = NULL;
 
 // static lv_indev_t *rotary_indev = NULL;
 

@@ -51,7 +51,7 @@ typedef struct {
     rotary_gpio_num_t rotary_gpio_cfg;
     rotary_trigger_cb_t rotary_cb;
 
-    button_config_t button_cfg;
+    my_button_config_t button_cfg;
 } rotary_cfg_t;
 
 typedef struct {
@@ -65,7 +65,7 @@ typedef struct {
 
     rotary_trigger_cb_t rotary_cb;
 
-    button_config_t button_config;
+    my_button_config_t button_config;
 } rotary_data_t;
 
 void rotary_init(rotary_cfg_t* rotary_cfg);

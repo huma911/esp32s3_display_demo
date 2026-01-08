@@ -25,6 +25,8 @@
 #ifndef _CUSTOMER_BOARD_DEFINITION_H_
 #define _CUSTOMER_BOARD_DEFINITION_H_
 
+#include "driver/gpio.h"
+
 /**
  * @brief LED Function Definition
  */

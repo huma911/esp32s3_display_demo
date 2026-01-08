@@ -3,4 +3,6 @@
 
 void lvgl_init(void);
 
+extern lv_display_t *lvgl_disp;
+
 #endif

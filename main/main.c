@@ -9,9 +9,14 @@
 #include "lv_demos.h"
 
 #include "esp_lvgl_port.h"
+#include "button_types.h"
+#include "button_gpio.h"
+#include "iot_button.h"
+#include "iot_knob.h"
+
 
 #include "lvgl_port.h"
-#include "rotary.h"
+// #include "rotary.h"
 #include "button.h"
 #include "weather.h"
 
@@ -26,6 +31,7 @@
 lv_ui guider_ui;
 
 static uint8_t screen_index = 0;
+lv_group_t *group = NULL;
 
 static void my_sntp_sync_time_cb(struct timeval *tv)
 {
@@ -125,6 +131,14 @@ static void sw2_button_short_press_trigger_cb(int gpio)
             lvgl_port_lock(0);
             lv_obj_send_event(guider_ui.screen_aclock, LV_EVENT_CLICKED, NULL);
             lv_example_scroll_6();
+
+            extern lv_obj_t * cont;
+            extern lv_obj_t * list_btn[20];
+
+            for(uint8_t i = 0; i < 20; i++) {
+                lv_group_add_obj(group, list_btn[i]);
+            }
+
             lvgl_port_unlock();
             break;
         case 2:
@@ -160,23 +174,24 @@ void app_main(void)
 {
     ESP_ERROR_CHECK(nvs_flash_init());
 
-    rotary_cfg_t rotary_cfg = {
-        .rotary_gpio_cfg.trigger_gpio_num = ROTARY_ES_A_GPIO,
-        .rotary_gpio_cfg.another_gpio_num = ROTARY_ES_B_GPIO,
-        .rotary_cb                        = rotary_rotate_trigger_cb,
-        .button_cfg                       = {
-            .active_level    = 0,
-            .getlevel_cb     = gpio_get_level,
-            .gpio_num        = ROTARY_BUTTON_GPIO,
-            .long_cb         = rotary_button_long_press_trigger_cb,
-            .long_press_time = 3000,
-            .short_cb        = rotary_button_short_press_trigger_cb,
-        }
-    };
-    rotary_init(&rotary_cfg);
-    rotary_start_task();
+    // rotary_cfg_t rotary_cfg = {
+    //     .rotary_gpio_cfg.trigger_gpio_num = ROTARY_ES_A_GPIO,
+    //     .rotary_gpio_cfg.another_gpio_num = ROTARY_ES_B_GPIO,
+    //     .rotary_cb                        = rotary_rotate_trigger_cb,
+    //     .button_cfg                       = {
+    //         .active_level    = 0,
+    //         .getlevel_cb     = gpio_get_level,
+    //         .gpio_num        = ROTARY_BUTTON_GPIO,
+    //         .long_cb         = rotary_button_long_press_trigger_cb,
+    //         .long_press_time = 3000,
+    //         .short_cb        = rotary_button_short_press_trigger_cb,
+    //     }
+    // };
+    // rotary_init(&rotary_cfg);
+    // rotary_start_task();
 
-    button_config_t button_cfg = {
+
+    my_button_config_t button_cfg = {
         .active_level    = 0,
         .getlevel_cb     = gpio_get_level,
         .gpio_num        = SW2_BUTTON_GPIO,
@@ -190,8 +205,43 @@ void app_main(void)
 
     lvgl_port_lock(0);
     // lv_demo_widgets();
-    setup_ui(&guider_ui);
+    // setup_ui(&guider_ui);
     custom_init(&guider_ui);
+
+    lvgl_port_unlock();
+
+    // create gpio button: knob button
+    button_handle_t button_encoder_enter = NULL;
+    const button_config_t btn_knob_cfg = {0};
+    const button_gpio_config_t btn_knob_gpio_cfg = {
+        .gpio_num = ROTARY_BUTTON_GPIO,
+        .active_level = 0,
+    };
+    
+    esp_err_t ret = iot_button_new_gpio_device(&btn_knob_cfg, &btn_knob_gpio_cfg, &button_encoder_enter);
+    if(button_encoder_enter == NULL || ret == ESP_FAIL) {
+        ESP_LOGE(TAG, "Button knob create failed");
+        // return ESP_FAIL;
+    } else {
+        ESP_LOGI(TAG, "Button knob create success");
+    }
+
+    // creat lvgl input devices
+    knob_config_t knob_cfg = {
+        .default_direction = 0,
+        .gpio_encoder_a = ROTARY_ES_B_GPIO,
+        .gpio_encoder_b = ROTARY_ES_A_GPIO,
+    };
+    lvgl_port_encoder_cfg_t encoder_cfg = {
+        .disp = lvgl_disp,
+        .encoder_a_b = &knob_cfg,
+        .encoder_enter = button_encoder_enter,
+    };
+
+    lvgl_port_lock(0);
+    lv_indev_t *indev_encoder = lvgl_port_add_encoder(&encoder_cfg);
+    group = lv_group_create();
+    lv_indev_set_group(indev_encoder, group);
     lvgl_port_unlock();
 
     ap_wifi_init(wifi_state_callback);

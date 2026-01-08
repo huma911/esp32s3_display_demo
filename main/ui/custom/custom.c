@@ -188,6 +188,13 @@ void custom_init(lv_ui *ui)
 {
     /* Add your codes here */
     custom_ui = ui;
+
+    setup_bottom_layer();
+    init_scr_del_flag(ui);
+    init_keyboard(ui);
+    setup_scr_screen_main(ui);
+    lv_screen_load(ui->screen_main);
+
     setup_scr_screen_aclock(ui);
 
     lvgl_port_lock(0);
