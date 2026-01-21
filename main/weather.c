@@ -294,13 +294,13 @@ static void weather_task(void *param)
     while (1)
     {
         if(!wifi_manager_is_connect()) {
-            vTaskDelay(pdTICKS_TO_MS(3000));
+            vTaskDelay(pdMS_TO_TICKS(3000));
         } else {
             ESP_LOGI(TAG, "Try to get location and weather.");
             IP_http_connect();          //get real IP
             location_http_connect();    //get city
             weather_http_connect();     //get weather
-            vTaskDelay(pdTICKS_TO_MS(3600 * 1000));
+            vTaskDelay(pdMS_TO_TICKS(3600 * 1000));
         }
     }
     

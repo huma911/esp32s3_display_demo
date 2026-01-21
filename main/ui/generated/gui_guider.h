@@ -1,5 +1,5 @@
 /*
-* Copyright 2025 NXP
+* Copyright 2026 NXP
 * NXP Proprietary. This software is owned or controlled by NXP and may only be used strictly in
 * accordance with the applicable license terms. By expressly accepting such terms or by downloading, installing,
 * activating and/or otherwise using the software, you are agreeing that you have read, and that you agree to
@@ -48,6 +48,9 @@ typedef struct
 	lv_obj_t *screen_aclock_label_temp_today;
 	lv_obj_t *screen_list;
 	bool screen_list_del;
+	lv_obj_t *screen_bar;
+	bool screen_bar_del;
+	lv_obj_t *screen_bar_bar_logo;
 }lv_ui;
 
 typedef void (*ui_setup_scr_t)(lv_ui * ui);
@@ -78,6 +81,7 @@ extern lv_ui guider_ui;
 void setup_scr_screen_main(lv_ui *ui);
 void setup_scr_screen_aclock(lv_ui *ui);
 void setup_scr_screen_list(lv_ui *ui);
+void setup_scr_screen_bar(lv_ui *ui);
 LV_IMAGE_DECLARE(_wifi_RGB565A8_32x32);
 LV_IMAGE_DECLARE(_line_RGB565A8_429x21);
 LV_IMAGE_DECLARE(_99_RGB565A8_64x64);
@@ -87,6 +91,15 @@ LV_IMAGE_DECLARE(_img_clockwise_sec_RGB565A8_20x135);
 LV_IMAGE_DECLARE(_img_clockwise_hour_RGB565A8_15x100);
 LV_IMAGE_DECLARE(_img_clockwise_min_RGB565A8_15x120);
 LV_IMAGE_DECLARE(_99_RGB565A8_48x48);
+
+LV_IMAGE_DECLARE(_black_RGB565A8_240x47);
+
+LV_IMAGE_DECLARE(_white_RGB565A8_240x47);
+LV_IMAGE_DECLARE(_blue_RGB565A8_240x47);
+LV_IMAGE_DECLARE(_green_RGB565A8_240x47);
+LV_IMAGE_DECLARE(_orange_RGB565A8_240x47);
+LV_IMAGE_DECLARE(_red_RGB565A8_240x47);
+LV_IMAGE_DECLARE(_yellow_RGB565A8_240x47);
 
 LV_FONT_DECLARE(lv_font_ZiTiQuanWeiJunHeiW22_80)
 LV_FONT_DECLARE(lv_font_ZiTiQuanWeiJunHeiW22_20)

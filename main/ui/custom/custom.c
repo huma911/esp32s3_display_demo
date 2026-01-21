@@ -258,3 +258,57 @@ void set_weather_parameter(lv_ui* ui, Day_Type index, const char* image_path, in
     
     lvgl_port_unlock();
 }
+
+void screen_bar_timer(lv_timer_t *timer)
+{
+    static uint8_t color_index = 0;
+    static bool bar_full = true;
+
+    if (lv_obj_is_valid(guider_ui.screen_bar))
+    {
+        if(color_index == 0) {
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_white_RGB565A8_240x47, LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 0, LV_ANIM_OFF);
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_red_RGB565A8_240x47, LV_PART_INDICATOR|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 100, LV_ANIM_ON);
+        } else if(color_index == 1) {
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_red_RGB565A8_240x47, LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 0, LV_ANIM_OFF);
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_yellow_RGB565A8_240x47, LV_PART_INDICATOR|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 100, LV_ANIM_ON);
+        } else if(color_index == 2) {
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_yellow_RGB565A8_240x47, LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 0, LV_ANIM_OFF);
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_blue_RGB565A8_240x47, LV_PART_INDICATOR|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 100, LV_ANIM_ON);
+        } else if(color_index == 3) {
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_blue_RGB565A8_240x47, LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 0, LV_ANIM_OFF);
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_green_RGB565A8_240x47, LV_PART_INDICATOR|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 100, LV_ANIM_ON);
+        } else if(color_index == 4) {
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_green_RGB565A8_240x47, LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 0, LV_ANIM_OFF);
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_orange_RGB565A8_240x47, LV_PART_INDICATOR|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 100, LV_ANIM_ON);
+        } else if(color_index == 5) {
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_orange_RGB565A8_240x47, LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 0, LV_ANIM_OFF);
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_black_RGB565A8_240x47, LV_PART_INDICATOR|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 100, LV_ANIM_ON);
+        } else if(color_index == 6) {
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_black_RGB565A8_240x47, LV_PART_MAIN|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 0, LV_ANIM_OFF);
+            lv_obj_set_style_bg_image_src(guider_ui.screen_bar_bar_logo, &_white_RGB565A8_240x47, LV_PART_INDICATOR|LV_STATE_DEFAULT);
+            lv_bar_set_value(guider_ui.screen_bar_bar_logo, 100, LV_ANIM_ON);
+        } else {
+            ;
+        }
+
+        // lv_bar_set_value(guider_ui.screen_bar_bar_logo, bar_full? 0 : 100, LV_ANIM_ON);
+        // bar_full = !bar_full;
+
+        color_index ++;
+        color_index = color_index % 7;
+    }
+}

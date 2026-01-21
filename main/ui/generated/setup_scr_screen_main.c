@@ -1,5 +1,5 @@
 /*
-* Copyright 2025 NXP
+* Copyright 2026 NXP
 * NXP Proprietary. This software is owned or controlled by NXP and may only be used strictly in
 * accordance with the applicable license terms. By expressly accepting such terms or by downloading, installing,
 * activating and/or otherwise using the software, you are agreeing that you have read, and that you agree to
@@ -38,7 +38,7 @@ void setup_scr_screen_main(lv_ui *ui)
     lv_obj_set_size(ui->screen_main_digital_clock_main, 329, 90);
     lv_label_set_text(ui->screen_main_digital_clock_main, "23:59:00");
     if (!screen_main_digital_clock_main_timer_enabled) {
-        digital_clock_timer = lv_timer_create(screen_main_digital_clock_main_timer, 1000, NULL);
+        lv_timer_create(screen_main_digital_clock_main_timer, 1000, NULL);
         screen_main_digital_clock_main_timer_enabled = true;
     }
 

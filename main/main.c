@@ -146,12 +146,17 @@ static void sw2_button_short_press_trigger_cb(int gpio)
             lv_obj_send_event(guider_ui.screen_list, LV_EVENT_CLICKED, NULL);
             lvgl_port_unlock();
             break;
+        case 3:
+            lvgl_port_lock(0);
+            lv_obj_send_event(guider_ui.screen_bar, LV_EVENT_CLICKED, NULL);
+            lvgl_port_unlock();
+            break;
         default:
             break;
     }
 
     screen_index ++;
-    screen_index = screen_index%3;
+    screen_index = screen_index%4;
 }
 
 static void sw2_button_long_press_trigger_cb(int gpio)

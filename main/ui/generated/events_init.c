@@ -1,5 +1,5 @@
 /*
-* Copyright 2025 NXP
+* Copyright 2026 NXP
 * NXP Proprietary. This software is owned or controlled by NXP and may only be used strictly in
 * accordance with the applicable license terms. By expressly accepting such terms or by downloading, installing,
 * activating and/or otherwise using the software, you are agreeing that you have read, and that you agree to
@@ -60,7 +60,7 @@ static void screen_list_event_handler (lv_event_t *e)
     switch (code) {
     case LV_EVENT_CLICKED:
     {
-        ui_load_scr_animation(&guider_ui, &guider_ui.screen_main, guider_ui.screen_main_del, &guider_ui.screen_list_del, setup_scr_screen_main, LV_SCR_LOAD_ANIM_NONE, 0, 0, false, true);
+        ui_load_scr_animation(&guider_ui, &guider_ui.screen_bar, guider_ui.screen_bar_del, &guider_ui.screen_list_del, setup_scr_screen_bar, LV_SCR_LOAD_ANIM_NONE, 0, 0, false, false);
         break;
     }
     default:
@@ -71,6 +71,25 @@ static void screen_list_event_handler (lv_event_t *e)
 void events_init_screen_list (lv_ui *ui)
 {
     lv_obj_add_event_cb(ui->screen_list, screen_list_event_handler, LV_EVENT_ALL, ui);
+}
+
+static void screen_bar_event_handler (lv_event_t *e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    switch (code) {
+    case LV_EVENT_CLICKED:
+    {
+        ui_load_scr_animation(&guider_ui, &guider_ui.screen_main, guider_ui.screen_main_del, &guider_ui.screen_bar_del, setup_scr_screen_main, LV_SCR_LOAD_ANIM_NONE, 0, 0, false, false);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void events_init_screen_bar (lv_ui *ui)
+{
+    lv_obj_add_event_cb(ui->screen_bar, screen_bar_event_handler, LV_EVENT_ALL, ui);
 }
 
 

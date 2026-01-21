@@ -56,6 +56,8 @@ void set_home_time(lv_ui* ui, date_value_t* date_value);
 void set_location_parameter(lv_ui* ui, const char* location_name);
 void set_weather_parameter(lv_ui* ui, Day_Type index, const char* image_path, int low_temperature, int high_temperature);
 
+void screen_bar_timer(lv_timer_t *timer);
+
 extern lv_timer_t* digital_clock_timer;
 
 extern lv_ui* custom_ui;
